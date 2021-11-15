@@ -15,6 +15,12 @@ class Topic(models.Model):
         return self.title
 
         
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
+
+
 class Idea(models.Model):
     topic = models.ForeignKey(Topic,on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -40,7 +46,7 @@ def send_new_officer_notification_email(sender, instance, created, **kwargs):
         send_mail(
             subject,
             message,
-            'tangthienan9@example.com',
-            ['dksky456@xample.com'],
+            'managementidea@gmail.com',
+            ['managementidea@gmail.com'],
             fail_silently=False,
         )
