@@ -13,24 +13,31 @@ class Topic(models.Model):
     final_closure_date = models.DateTimeField(null=True)
     def __str__(self):
         return self.title
+
+        
 class Category(models.Model):
     name = models.CharField(max_length=100)
     def __str__(self):
         return self.name
+
+
 class Idea(models.Model):
     topic = models.ForeignKey(Topic,on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    content = models.CharField(max_length=500, null=True)
+    content = models.TextField(max_length=500, null=True)
     file = models.FileField(upload_to='')
     date = models.DateTimeField(null=True)
-    
+
+
+class Comment(models.Model):
+    idea = models.ForeignKey(Idea, on_delete=models.CASCADE)
+    text = models.CharField(max_length=200)
+
+
 
 @receiver(post_save, sender=Idea)
 def send_new_officer_notification_email(sender, instance, created, **kwargs):
-
-    # if a new officer is created, compose and send the email
     if created:
-
         subject = 'subject'
         message = 'A New Idea has been assigned!\n'
 

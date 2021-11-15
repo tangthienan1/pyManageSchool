@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import csv
 from django.contrib.admin.decorators import action
 from django.contrib.admin.helpers import Fieldset
-from .models import Category, Topic, Idea
+from .models import Category, Comment, Topic, Idea
 # Register your models here.
 admin.site.site_header = "Manage Topic"
 class ExportCsvMixin:
@@ -25,12 +25,22 @@ class ExportCsvMixin:
     export_as_csv.short_description = "Export Selected"
 
 class TopicAdmin(admin.ModelAdmin):
-    Fieldset = [
-        (None, {'fields':['title','closure_date','final_closure_date']})
+    fieldset = [
+        (None, {'fields':['title']}),
+        ('Date information', {'fields':['closure_date','final_closure_date']})
     ]
+    inline = [Comment]
+
+
+class CommentInline(admin.StackedInline):
+    model = Comment
+    extra = 1
+
 
 class IdeaAdmin(admin.ModelAdmin, ExportCsvMixin):
     actions = ["export_as_csv"]
+    inlines = [CommentInline]
+
 
 
 admin.site.register(Topic, TopicAdmin)
