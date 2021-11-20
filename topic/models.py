@@ -6,6 +6,8 @@ from django.db.models.signals import post_save
 
 from django.dispatch import receiver
 
+from managementstudent.settings import EMAIL_HOST_USER
+
 # Create your models here.
 class Topic(models.Model):
     title = models.CharField(max_length=100)
@@ -46,7 +48,7 @@ def send_new_officer_notification_email(sender, instance, created, **kwargs):
         send_mail(
             subject,
             message,
-            'managementidea@gmail.com',
-            ['managementidea@gmail.com'],
+            EMAIL_HOST_USER,
+            ['tangthienan9@gmail.com'],
             fail_silently=False,
         )
