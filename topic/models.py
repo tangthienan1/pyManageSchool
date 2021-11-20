@@ -49,6 +49,6 @@ def send_new_officer_notification_email(sender, instance, created, **kwargs):
             subject,
             message,
             EMAIL_HOST_USER,
-            ['tangthienan9@gmail.com'],
+            ['neyugn.dh@gmail.com'],
             fail_silently=False,
         )
